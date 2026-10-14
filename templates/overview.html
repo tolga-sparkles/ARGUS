@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block status_line %}
+<div class="status-line">
+  <span class="status-dot" id="statusDot"></span>
+  <span class="status-text" id="statusText">CONNECTING TO MONITORING…</span>
+</div>
+<div class="status-pulse" id="statusBar"></div>
+<div class="status-sub" id="statusSub" hidden></div>
+{% endblock %}
+
+{% block content %}
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-value kpi-healthy" id="kpiHealthy">—</div>
+    <div class="kpi-label">HEALTHY</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value kpi-warning" id="kpiWarning">—</div>
+    <div class="kpi-label">WARNING</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value kpi-critical" id="kpiCritical">—</div>
+    <div class="kpi-label">CRITICAL</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value kpi-offline" id="kpiOffline">—</div>
+    <div class="kpi-label">OFFLINE</div>
+  </div>
+</div>
+<div class="kpi-note" id="kpiNote" hidden></div>
+
+<div class="overview-grid">
+  <div class="col-left">
+    <section class="card">
+      <h2>SERVERS REQUIRING ATTENTION <span class="h2-count" id="attentionCount" hidden></span></h2>
+      <div class="attention-list" id="attentionList"><div class="placeholder">Loading…</div></div>
+    </section>
+
+    <section class="card" id="pressureSection" hidden>
+      <h2>RESOURCE PRESSURE</h2>
+      <div class="pressure-strip" id="pressureGrid"></div>
+    </section>
+
+    <section class="card">
+      <h2>FLEET HEALTH</h2>
+      <div class="group-list" id="groupList"><div class="placeholder">Loading…</div></div>
+    </section>
+  </div>
+
+  <div class="col-right">
+    <section class="card">
+      <h2>ACTIVE ALERTS</h2>
+      <div class="alert-list" id="alertList"><div class="placeholder">Loading…</div></div>
+    </section>
+
+    <section class="card">
+      <h2>COLLECTOR HEALTH</h2>
+      <div class="collector-list" id="collectorList"><div class="placeholder">Loading…</div></div>
+    </section>
+
+    <section class="card">
+      <h2>RECENT EVENTS</h2>
+      <div class="event-list" id="eventList"><div class="placeholder">Loading…</div></div>
+    </section>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/overview.js') ~ '?v=3' }}"></script>
+{% endblock %}

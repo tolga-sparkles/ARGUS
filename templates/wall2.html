@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wall Mode 2 · ARGUS</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/wallmode2.css') ~ '?v=3' }}">
+</head>
+<body class="wall2-body">
+<div class="wall2-root">
+
+  <header class="wall2-header">
+    <div class="wall2-brand">
+      <span class="wall2-logo">ARGUS</span>
+      <div class="wall2-title">
+        <div class="wall2-title-main">ARGUS</div>
+        <div class="wall2-title-sub">Operations Center · Wall Overview</div>
+      </div>
+    </div>
+    <div class="wall2-status" id="wall2Status">
+      <span class="wall2-status-dot"></span>
+      <span class="wall2-status-text" id="wall2StatusText">CONNECTING…</span>
+    </div>
+    <div class="wall2-meta">
+      {% if demo_manager %}<span class="demo-badge">DEMO · SIMULATED DATA</span>{% elif demo_mode %}<span class="demo-badge">DEMO</span>{% endif %}
+      <span class="wall2-meta-item" id="wall2Ping">AVG PING —</span>
+      <span class="wall2-meta-item" id="syncInfo">LAST SYNC —</span>
+    </div>
+  </header>
+
+  <section class="wall2-kpis" id="wall2Kpis">
+    <div class="wall2-kpi">
+      <span class="wall2-kpi-dot healthy"></span>
+      <span class="wall2-kpi-value" id="wall2KpiHealthy">—</span>
+      <span class="wall2-kpi-label">HEALTHY</span>
+    </div>
+    <div class="wall2-kpi">
+      <span class="wall2-kpi-dot warning"></span>
+      <span class="wall2-kpi-value" id="wall2KpiWarning">—</span>
+      <span class="wall2-kpi-label">WARNING</span>
+    </div>
+    <div class="wall2-kpi">
+      <span class="wall2-kpi-dot critical"></span>
+      <span class="wall2-kpi-value" id="wall2KpiCritical">—</span>
+      <span class="wall2-kpi-label">CRITICAL</span>
+    </div>
+    <div class="wall2-kpi">
+      <span class="wall2-kpi-dot offline"></span>
+      <span class="wall2-kpi-value" id="wall2KpiOffline">—</span>
+      <span class="wall2-kpi-label">OFFLINE</span>
+    </div>
+  </section>
+
+  <main class="wall2-middle">
+    <aside class="wall2-alerts panel">
+      <h2>ACTIVE ALERTS <span class="wall2-h2-count" id="wall2AlertsCount"></span></h2>
+      <div class="wall2-alerts-list" id="wall2Alerts"><div class="wall2-placeholder">Loading…</div></div>
+    </aside>
+    <section class="wall2-fleet panel">
+      <h2>FLEET STATUS SUMMARY <span class="wall2-fleet-meta" id="wall2FleetMeta"></span></h2>
+      <div class="wall2-fleet-grid" id="wall2Fleet"><div class="wall2-placeholder">Loading…</div></div>
+    </section>
+  </main>
+
+  <section class="wall2-bottom">
+    <div class="wall2-chart panel">
+      <h2>NETWORK THROUGHPUT <span class="wall2-chart-sum" id="wall2ThroughputSum"></span></h2>
+      <div class="wall2-chart-canvas"><canvas id="wall2ThroughputChart"></canvas></div>
+    </div>
+    <div class="wall2-chart panel">
+      <h2>GLOBAL CPU LOAD <span class="wall2-chart-sum" id="wall2CpuSum"></span></h2>
+      <div class="wall2-chart-canvas"><canvas id="wall2CpuChart"></canvas></div>
+    </div>
+  </section>
+
+</div>
+<script>window.WALL2_DEMO = {{ 'true' if (demo_mode or demo_manager) else 'false' }};</script>
+<script src="{{ url_for('static', filename='js/app.js') ~ '?v=3' }}"></script>
+<script src="{{ url_for('static', filename='js/wallmode2.js') ~ '?v=3' }}"></script>
+</body>
+</html>

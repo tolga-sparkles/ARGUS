@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block page_title %}Servers{% endblock %}
+{% block page_subtitle %}Infrastructure inventory and live health{% endblock %}
+
+{% block content %}
+<div class="toolbar">
+  <div class="toolbar-left">
+    <input type="text" class="search-input" id="serverSearch" placeholder="Search hostname / IP..." autocomplete="off">
+    <div class="filter-tabs" id="statusTabs">
+      <button class="chip active" data-status="all" type="button">All</button>
+      <button class="chip" data-status="healthy" type="button">Healthy</button>
+      <button class="chip" data-status="warning" type="button">Warning</button>
+      <button class="chip" data-status="critical" type="button">Critical</button>
+      <button class="chip" data-status="offline" type="button">Offline</button>
+    </div>
+    <select class="filter-select" id="siteFilter">
+      <option value="">Site: All</option>
+    </select>
+    <select class="filter-select" id="roleFilter">
+      <option value="">Role: All</option>
+    </select>
+    <select class="filter-select" id="osFilter">
+      <option value="">OS: All</option>
+    </select>
+    <select class="filter-select" id="dcFilter">
+      <option value="">Datacenter: All</option>
+    </select>
+    <select class="filter-select" id="hostFilter">
+      <option value="">Host: All</option>
+    </select>
+    <select class="filter-select" id="sortSelect">
+      <option value="severity">Sort: Severity</option>
+      <option value="hostname">Sort: Hostname</option>
+      <option value="ip">Sort: IP</option>
+      <option value="cpu">Sort: CPU</option>
+      <option value="memory">Sort: Memory</option>
+      <option value="disk">Sort: Disk</option>
+      <option value="ping">Sort: Ping</option>
+      <option value="uptime">Sort: Uptime</option>
+    </select>
+  </div>
+  <div class="toolbar-meta">
+    <span class="toolbar-count" id="serversCount">—</span>
+    <select class="filter-select" id="perPageSelect">
+      <option value="25">25 / page</option>
+      <option value="50" selected>50 / page</option>
+      <option value="100">100 / page</option>
+    </select>
+    <button class="retry-btn" type="button" id="exportBtn">Export</button>
+  </div>
+</div>
+
+<div class="selection-strip" id="selectionStrip" hidden>
+  <span id="selectionCount">0 selected</span>
+  <button class="chip" type="button" id="selectAllMatching" hidden>Select all matching servers</button>
+  <button class="chip" type="button" id="clearSelection">Clear</button>
+</div>
+
+<div class="table-wrap">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th class="th-check"><input type="checkbox" id="checkAll" aria-label="Select page"></th>
+        <th>SERVER</th>
+        <th>IP</th>
+        <th>STATUS</th>
+        <th>CPU</th>
+        <th>MEMORY</th>
+        <th>DISK</th>
+        <th>PING</th>
+        <th>UPTIME</th>
+        <th>LAST SEEN</th>
+      </tr>
+    </thead>
+    <tbody id="serversBody"></tbody>
+  </table>
+</div>
+
+<div class="pagination" id="serversPagination"></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/servers.js') ~ '?v=4' }}"></script>
+{% endblock %}

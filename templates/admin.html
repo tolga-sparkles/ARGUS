@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block page_title %}Admin Panel{% endblock %}
+{% block page_subtitle %}Sanallaştırma ortamı yönetimi{% endblock %}
+
+{% block content %}
+<div class="admin-layout">
+  <nav class="admin-subnav">
+    <a class="admin-nav-item {{ 'active' if admin_tab == 'dashboard' }}" href="/admin">Dashboard</a>
+    <a class="admin-nav-item {{ 'active' if admin_tab == 'servers' }}" href="/admin/servers">Monitored Servers</a>
+    <a class="admin-nav-item {{ 'active' if admin_tab == 'scan' }}" href="/admin/scan">Exporter Tara</a>
+    <a class="admin-nav-item {{ 'active' if admin_tab == 'notifications' }}" href="/admin/notifications">Notifications</a>
+    <a class="admin-nav-item {{ 'active' if admin_tab == 'hosts' }}" href="/admin/hosts">Virtualization Hosts</a>
+    <a class="admin-nav-item {{ 'active' if admin_tab == 'vms' }}" href="/admin/vms">Virtual Machines</a>
+    <a class="admin-nav-item {{ 'active' if admin_tab == 'groups' }}" href="/admin/groups">Groups / Datacenters</a>
+    <a class="admin-nav-item {{ 'active' if admin_tab == 'settings' }}" href="/admin/settings">Settings</a>
+  </nav>
+  <div class="admin-content" id="adminContent"><div class="placeholder">Loading…</div></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>window.ADMIN_TAB = "{{ admin_tab }}";</script>
+<script src="{{ url_for('static', filename='js/admin.js') ~ '?v=6' }}"></script>
+{% if admin_tab == 'notifications' %}
+<script src="{{ url_for('static', filename='js/admin_notify.js') ~ '?v=2' }}"></script>
+{% endif %}
+{% endblock %}

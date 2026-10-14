@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block page_title %}Virtualization{% endblock %}
+{% block page_subtitle %}Sanallaştırma ortamları ve sanal sunucular{% endblock %}
+
+{% block content %}
+<div class="kpi-grid kpi-grid-6" id="virtKpiHosts">
+  <div class="kpi-card"><div class="kpi-value" id="vkHosts">—</div><div class="kpi-label">HOSTS</div></div>
+  <div class="kpi-card"><div class="kpi-value" id="vkVms">—</div><div class="kpi-label">VMs</div></div>
+  <div class="kpi-card"><div class="kpi-value kpi-healthy" id="vkHealthy">—</div><div class="kpi-label">HEALTHY HOST</div></div>
+  <div class="kpi-card"><div class="kpi-value kpi-warning" id="vkWarning">—</div><div class="kpi-label">WARNING HOST</div></div>
+  <div class="kpi-card"><div class="kpi-value kpi-critical" id="vkCritical">—</div><div class="kpi-label">CRITICAL HOST</div></div>
+  <div class="kpi-card"><div class="kpi-value kpi-offline" id="vkOffline">—</div><div class="kpi-label">OFFLINE HOST</div></div>
+</div>
+<div class="kpi-grid kpi-grid-3" id="virtKpiAvgs">
+  <div class="kpi-card"><div class="kpi-value" id="vkAvgCpu">—</div><div class="kpi-label">AVG CPU</div></div>
+  <div class="kpi-card"><div class="kpi-value" id="vkAvgRam">—</div><div class="kpi-label">AVG RAM</div></div>
+  <div class="kpi-card"><div class="kpi-value" id="vkAvgDisk">—</div><div class="kpi-label">AVG DISK</div></div>
+</div>
+
+<div class="overview-grid virt-grid">
+  <div class="col-left">
+    <section class="card virt-tree-card">
+      <h2>INFRASTRUCTURE TREE <span class="h2-count" id="virtTreeMeta"></span></h2>
+      <div class="virt-tree" id="virtTree"><div class="placeholder">Loading…</div></div>
+    </section>
+  </div>
+  <div class="col-right">
+    <section class="card virt-detail-card">
+      <h2>NODE DETAILS</h2>
+      <div id="virtDetail"><div class="placeholder">Select a node from the tree.</div></div>
+    </section>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/virt.js') ~ '?v=4' }}"></script>
+{% endblock %}

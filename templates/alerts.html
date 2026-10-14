@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block page_title %}Alerts{% endblock %}
+{% block page_subtitle %}Active infrastructure conditions requiring attention{% endblock %}
+
+{% block content %}
+<div class="summary-chips" id="alertSummary">
+  <div class="summary-chip"><div class="sc-value" id="sumActive">—</div><div class="sc-label">ACTIVE</div></div>
+  <div class="summary-chip"><div class="sc-value" id="sumCritical">—</div><div class="sc-label">CRITICAL</div></div>
+  <div class="summary-chip"><div class="sc-value" id="sumWarning">—</div><div class="sc-label">WARNING</div></div>
+  <div class="summary-chip"><div class="sc-value" id="sumOffline">—</div><div class="sc-label">OFFLINE</div></div>
+</div>
+
+<div class="toolbar">
+  <div class="toolbar-left">
+    <div class="filter-tabs" id="severityTabs">
+      <button class="chip active" data-severity="all" type="button">All</button>
+      <button class="chip" data-severity="critical" type="button">Critical</button>
+      <button class="chip" data-severity="warning" type="button">Warning</button>
+      <button class="chip" data-severity="offline" type="button">Offline</button>
+    </div>
+    <input type="text" class="search-input" id="alertSearch" placeholder="Search server..." autocomplete="off">
+    <select class="filter-select" id="alertRoleFilter">
+      <option value="">Role: All</option>
+    </select>
+    <select class="filter-select" id="alertSiteFilter">
+      <option value="">Site: All</option>
+    </select>
+  </div>
+</div>
+
+<div class="page-list" id="alertsList"></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/alerts.js') ~ '?v=3' }}"></script>
+{% endblock %}

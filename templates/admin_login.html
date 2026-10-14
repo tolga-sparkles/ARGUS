@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Access · ARGUS</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') ~ '?v=3' }}">
+</head>
+<body class="login-body">
+<div class="login-wrap">
+  <div class="login-brand">
+    <span class="login-logo">ARGUS</span>
+    <div class="login-title">ARGUS</div>
+    <div class="login-sub">Operations Center</div>
+  </div>
+
+  <div class="login-card">
+    <div class="login-eyebrow">ADMIN ACCESS</div>
+    <form method="post" action="/admin/login" id="loginForm">
+      {% if next_url %}<input type="hidden" name="next" value="{{ next_url }}">{% endif %}
+      <div class="admin-field">
+        <label for="loginUser">Username</label>
+        <input class="admin-input" type="text" id="loginUser" name="username" autocomplete="username" autofocus required>
+      </div>
+      <div class="admin-field">
+        <label for="loginPass">Password</label>
+        <input class="admin-input" type="password" id="loginPass" name="password" autocomplete="current-password" required>
+      </div>
+      {% if error %}<div class="login-error">{{ error }}</div>{% endif %}
+      <button type="submit" class="login-btn" id="loginBtn">Sign In</button>
+    </form>
+    <div class="login-foot">Authorized personnel only</div>
+  </div>
+</div>
+<script>
+(function () {
+  const form = document.getElementById("loginForm");
+  const btn = document.getElementById("loginBtn");
+  form.addEventListener("submit", function () {
+    btn.disabled = true;
+    btn.textContent = "Signing in...";
+  });
+})();
+</script>
+</body>
+</html>

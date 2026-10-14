@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block page_title %}Help{% endblock %}
+{% block page_subtitle %}Pages and API endpoint reference{% endblock %}
+
+{% block content %}
+<section class="card">
+  <h2>PAGES</h2>
+  <div class="help-list">
+    {% for entry in pages %}
+    <div class="help-row">
+      <span class="help-path">{{ entry.path }}</span>
+      <div class="help-desc">{{ entry.description }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="card">
+  <h2>API ENDPOINTS</h2>
+  <div class="help-list">
+    {% for entry in endpoints %}
+    <div class="help-row">
+      <div class="help-path-wrap">
+        <span class="method-badge">{{ entry.method }}</span>
+        <span class="help-path">{{ entry.path }}</span>
+      </div>
+      <div>
+        <div class="help-desc">{{ entry.description }}</div>
+        {% if entry.params %}
+        <div class="help-params"><span class="help-params-label">QUERY</span> {{ entry.params }}</div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="card">
+  <h2>NOTES</h2>
+  <div class="help-list">
+    <div class="help-row">
+      <span class="help-path">Data source</span>
+      <div class="help-desc">All pages read the same Health Engine snapshot — Overview, Servers, Alerts and Wall Mode always show identical results.</div>
+    </div>
+    <div class="help-row">
+      <span class="help-path">Security</span>
+      <div class="help-desc">Prometheus is only accessed by the backend. The browser never receives Prometheus URLs or credentials, and arbitrary PromQL / host / IP probing is not accepted.</div>
+    </div>
+    <div class="help-row">
+      <span class="help-path">Management Demo</span>
+      <div class="help-desc">Add <span class="help-path">?demo=manager</span> to any URL for the presentation dataset (16 demo servers, deterministic states: 12 healthy / 2 warning / 1 critical / 1 offline). It is a read-only simulation: no Prometheus calls, no incident persistence, no notifications — a permanent "DEMO · SIMULATED DATA" badge is shown.</div>
+    </div>
+    <div class="help-row">
+      <span class="help-path">Raw JSON</span>
+      <div class="help-desc">The machine-readable version of this page is available at <span class="help-path">/help.json</span>.</div>
+    </div>
+  </div>
+</section>
+{% endblock %}

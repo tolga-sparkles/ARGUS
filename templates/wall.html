@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wall Mode · ARGUS</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') ~ '?v=9' }}">
+</head>
+<body class="wall-body">
+<div class="wall-root">
+  <header class="wall-header">
+    <div class="wall-title">
+      <span class="wall-brand">ARGUS</span>
+      <div class="wall-kpis" id="wallKpis">
+        <span class="wall-kpi"><b id="wallHealthy">—</b> HEALTHY</span>
+        <span class="wall-kpi"><b id="wallWarning">—</b> WARNING</span>
+        <span class="wall-kpi"><b id="wallCritical">—</b> CRITICAL</span>
+        <span class="wall-kpi"><b id="wallOffline">—</b> OFFLINE</span>
+      </div>
+    </div>
+    <div class="wall-header-right">
+      {% if demo_manager %}<span class="demo-badge">DEMO · SIMULATED DATA</span>{% endif %}
+      <span class="live-dot">●</span>
+      <span class="live-label">LIVE</span>
+      <span class="wall-clock" id="wallClock">— TRT</span>
+      <button class="wall-btn" id="wallFullscreenBtn" type="button">Fullscreen</button>
+      <a class="wall-btn" href="/{{ demo_qs }}">Exit Wall Mode</a>
+    </div>
+  </header>
+  <main class="wall-main">
+    <section class="wall-groups" id="wallGroups"><div class="placeholder">Loading…</div></section>
+    <aside class="wall-issues">
+      <h2>ACTIVE ISSUES</h2>
+      <div id="wallIssues"><div class="placeholder">Loading…</div></div>
+    </aside>
+  </main>
+</div>
+<script src="{{ url_for('static', filename='js/app.js') ~ '?v=3' }}"></script>
+<script src="{{ url_for('static', filename='js/wall.js') ~ '?v=3' }}"></script>
+</body>
+</html>

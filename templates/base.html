@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARGUS · Operations Center</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') ~ '?v=9' }}">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="sidebar-logo">ARGUS</span>
+      <div class="sidebar-product">
+        <div class="sidebar-product-title">ARGUS</div>
+        <div class="sidebar-product-sub">Operations Center</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="nav-item {{ 'active' if active_page == 'overview' }}" href="/{{ demo_qs }}">
+        <svg viewBox="0 0 16 16" width="15" height="15"><path fill="currentColor" d="M2 2h5v5H2V2zm7 0h5v5H9V2zM2 9h5v5H2V9zm7 0h5v5H9V9z"/></svg>
+        Overview
+      </a>
+      <a class="nav-item {{ 'active' if active_page == 'servers' }}" href="/servers{{ demo_qs }}">
+        <svg viewBox="0 0 16 16" width="15" height="15"><path fill="currentColor" d="M1 3a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H2a1 1 0 01-1-1V3zm0 7a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H2a1 1 0 01-1-1v-3zm8-7a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H9a1 1 0 01-1-1V3zm0 7a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H9a1 1 0 01-1-1v-3z"/></svg>
+        Servers
+      </a>
+      <a class="nav-item {{ 'active' if active_page == 'virtualization' }}" href="/virtualization">
+        <svg viewBox="0 0 16 16" width="15" height="15"><path fill="currentColor" d="M8 1a1 1 0 011 1v1.2l2.4 1.4 1.6-.9 1 1-1.6.9V7l2 1.2-2 1.2-1.6.9-1-1 1.6-.9-2-1.2V3.6L6 2.2a1 1 0 01-1-1.2z"/></svg>
+        Virtualization
+      </a>
+      <a class="nav-item {{ 'active' if active_page == 'alerts' }}" href="/alerts{{ demo_qs }}">
+        <svg viewBox="0 0 16 16" width="15" height="15"><path fill="currentColor" d="M8 1l7 12H1L8 1zm0 4.2L5.4 10h5.2L8 5.2z"/></svg>
+        Alerts
+      </a>
+      <a class="nav-item {{ 'active' if active_page == 'history' }}" href="/history{{ demo_qs }}">
+        <svg viewBox="0 0 16 16" width="15" height="15"><path fill="currentColor" d="M8 1a7 7 0 100 14A7 7 0 008 1zM7 4h2v5H7V4zm0 6h2v2H7v-2z"/></svg>
+        History
+      </a>
+      <a class="nav-item {{ 'active' if active_page == 'wall' }}" href="/wall{{ demo_qs }}">
+        <svg viewBox="0 0 16 16" width="15" height="15"><path fill="currentColor" d="M1 1h5v5H1V1zm0 9h5v5H1v-5zm9-9h5v5h-5V1zm0 9h5v5h-5v-5z"/></svg>
+        Wall Mode
+      </a>
+      <a class="nav-item {{ 'active' if active_page == 'wall2' }}" href="/wall2{{ demo_qs }}">
+        <svg viewBox="0 0 16 16" width="15" height="15"><path fill="currentColor" d="M1 2h6v6H1V2zm8 0h6v6H9V2zM1 10h6v4H1v-4zm8 0h6v4H9v-4z"/></svg>
+        Wall Mode 2
+      </a>
+      <a class="nav-item {{ 'active' if active_page == 'admin' }}" href="/admin">
+        <svg viewBox="0 0 16 16" width="15" height="15"><path fill="currentColor" d="M8 2a3 3 0 100 6 3 3 0 000-6zM2 13c0-2.2 2.7-3.5 6-3.5s6 1.3 6 3.5v1H2v-1z"/></svg>
+        Admin
+      </a>
+    </nav>
+    <div class="sidebar-foot">
+      <span id="healthDot" class="sidebar-foot-dot"></span>
+      <span id="healthFoot">CONNECTING…</span>
+    </div>
+    {% if admin_user %}
+    <div class="sidebar-admin">
+      <span class="sidebar-foot-dot ok"></span>
+      <span class="sidebar-admin-user">{{ admin_user }} · Authenticated</span>
+      <a class="sidebar-logout" href="/admin/logout">Logout</a>
+    </div>
+    {% endif %}
+  </aside>
+
+  <main class="content">
+    <div class="content-inner">
+      <header class="page-header">
+        <div class="page-title">
+          <h1>{% block page_title %}ARGUS{% endblock %}</h1>
+          <div class="page-sub">{% block page_subtitle %}Infrastructure monitoring &amp; health · <span id="serverTotal">—</span> servers{% endblock %}</div>
+        </div>
+        <div class="status-bar">
+          <div class="status-row">
+            {% if demo_manager %}<span class="demo-badge" id="demoBadge">DEMO · SIMULATED DATA</span>
+            {% elif demo_mode %}<span class="demo-badge" id="demoBadge">DEMO</span>{% endif %}
+            <span class="live-dot">●</span>
+            <span class="live-label">LIVE</span>
+            <span class="divider">|</span>
+            <span class="sync-text" id="syncInfo">LAST SYNC —</span>
+          </div>
+          <div class="status-row clock-row">
+            <span class="clock-main" id="clock">—</span>
+            <span class="clock-tz">TRT</span>
+          </div>
+        </div>
+      </header>
+
+      {% block status_line %}{% endblock %}
+
+      {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+      <div class="footer-info">Example Organization · ARGUS Operations Center</div>
+    </footer>
+  </main>
+</div>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<aside class="drawer" id="drawer">
+  <button class="drawer-close" id="drawerClose" type="button" aria-label="Close">✕</button>
+  <div id="drawerContent"></div>
+</aside>
+
+<script src="{{ url_for('static', filename='js/app.js') ~ '?v=10' }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>
